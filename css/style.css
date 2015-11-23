@@ -1,0 +1,17 @@
+.login-space {
+	width: 100%;
+	overflow: auto;
+	margin: auto;
+}
+
+.login-form {
+	width: 100%;
+}
+
+#login-email {
+	width: 97%;
+}
+
+#login-password {
+	width: 97%;
+}
