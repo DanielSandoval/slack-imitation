@@ -2,9 +2,9 @@
 
 //Parse.initialize("Usqx2kaFP1RPRWR4ZC7k1rLzoO8Uk8LuJdsw3tND", "CzcfQ46fNmqiyQliFRx91D0ndkBw1ceNUrHhGiv8");
 
-var myApp = angular.module('app', ['ngRoute']);
+var myApp = angular.module('app', ['ngRoute', 'firebase']);
 
-//var myFirebaseRef = new Firebase("https://slack-imitation.firebaseio.com/");
+var myFirebaseRef = new Firebase("https://slack-imitation.firebaseio.com/");
 
 myApp.config(function($routeProvider) {
 	$routeProvider
@@ -19,9 +19,9 @@ myApp.config(function($routeProvider) {
 			controllerAs: 'SignUpCtrl'
 		})
 		.when('/chat', {
-			templateUrl:'templates/chat.html'
-			/*controller: 'ChatController',
-			controllerAs: 'ChatCtrl'*/
+			templateUrl:'templates/chat.html',
+			controller: 'ChatController',
+			controllerAs: 'ChatCtrl'
 		})
 	    .otherwise({
 	    	redirectTo: '/'
@@ -38,13 +38,9 @@ myApp.controller('SignUpController', function($scope, $location) {
 		$("#signup-user").val(email);
 	});
 
-	//var myFirebaseRef = new Firebase("https://slack-imitation.firebaseio.com/");
-
 	$scope.signUp = function() {
 		var email_sign = $("#signup-email").val();
 		var password_sign = $("#signup-password").val();
-
-		//var myFirebaseRef = new Firebase("https://slack-imitation.firebaseio.com/");
 
 		myFirebaseRef.createUser({
 			email: email_sign,
@@ -54,32 +50,11 @@ myApp.controller('SignUpController', function($scope, $location) {
 				console.log("Error creating user:", error);
 			} else {
 				console.log("Successfully created user account with uid:", userData.uid);
-				$location.path('#/chat');
+				$location.path('/chat');
 				//$window.location.href = '/chat';
 			}
 		});
 	};
-
-	/*$scope.signUp = function() {
-		var username_sign = $("#signup-user").val();
-		var email_sign = $("#signup-email").val();
-		var password_sign = $("#signup-password").val();
-
-		var user = new Parse.User();
-		user.set("username", username_sign);
-		user.set("password", password_sign);
-		user.set("email", email_sign);
-
-		user.signUp(null, {
-			success: function(user) {
-				alert("Sign Up successfully");
-				$location.path("#/");
-			},
-			error: function(user, error) {
-				alert("Error: " + error.message);
-			}
-		})
-	};*/
 });
 
 myApp.controller('LoginController', function($scope, $location) {
@@ -87,15 +62,9 @@ myApp.controller('LoginController', function($scope, $location) {
 		'backgroundColor': '#21A1CF'
 	};
 
-	//$location.path('/chat');
-
-	var myFirebaseRef = new Firebase("https://slack-imitation.firebaseio.com/");
-
 	$scope.login = function() {
 		var email_login = $("#login-email").val();
 		var password_login = $("#login-password").val();
-
-		//var myFirebaseRef = new Firebase("https://slack-imitation.firebaseio.com/");
 
 		myFirebaseRef.authWithPassword({
 			"email": email_login,
@@ -112,10 +81,27 @@ myApp.controller('LoginController', function($scope, $location) {
 	};
 });
 
-/*myApp.controller('ChatController', function($scope) {
-	$scope.message = "hola mundo";
-});*/
+myApp.controller('ChatController', function($scope, $firebase) {
+	$scope.mess = "hola";
+	$scope.messages = $firebase(myFirebaseRef);
 
-/*$(document).ready(function() {
-	//
-});*/
+	$scope.addMessage = function() {
+		alert("hola mundo");
+		/*if (e.keyCode != 13) return;
+		$scope.messages.$add({
+			from: $scope.user,
+			body: $scope.msgPublic
+		});
+		$scope.msgPublic = "";*/
+	}
+});
+
+/*function ChatController($scope, $firebase) {
+	$scope.messages = $firebase(myFirebaseRef);
+
+	$scope.addMessage = function(e) {
+  	if (e.keyCode != 13) return;
+  	$scope.messages.$add({from: $scope.user, body: $scope.msgPublic});
+  	$scope.msg = "";
+  }
+}*/
