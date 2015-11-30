@@ -90,7 +90,7 @@ myApp.controller("ChatController", ["$scope", "$firebase",
             from: $scope.user,
             body: $scope.msgPublic
         })
+        $scope.msgPublic = "";
     };
-    $scope.msgPublic = "";
   }
 ]);
