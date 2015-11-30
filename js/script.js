@@ -1,7 +1,5 @@
 // Javasript Code.
 
-//Parse.initialize("Usqx2kaFP1RPRWR4ZC7k1rLzoO8Uk8LuJdsw3tND", "CzcfQ46fNmqiyQliFRx91D0ndkBw1ceNUrHhGiv8");
-
 var myApp = angular.module('app', ['ngRoute', 'firebase']);
 
 var myFirebaseRef = new Firebase("https://slack-imitation.firebaseio.com/");
@@ -82,26 +80,18 @@ myApp.controller('LoginController', function($scope, $location) {
 });
 
 myApp.controller('ChatController', function($scope, $firebase) {
-	$scope.mess = "hola";
-	$scope.messages = $firebase(myFirebaseRef);
+	myFirebaseRef.on('child_added', function(snapshot) {
+		var msg = snapshot.val();
+	});
 
 	$scope.addMessage = function() {
-		alert("hola mundo");
-		/*if (e.keyCode != 13) return;
-		$scope.messages.$add({
-			from: $scope.user,
-			body: $scope.msgPublic
+		myFirebaseRef.on('child_added', function(snapshot) {
+			var message = snapshot.val();
+			//console.log(message.from);
+			$scope.showUser = message.from;
+			console.log($scope.showUser);
 		});
-		$scope.msgPublic = "";*/
+
+		$scope.msgPublic = "";
 	}
 });
-
-/*function ChatController($scope, $firebase) {
-	$scope.messages = $firebase(myFirebaseRef);
-
-	$scope.addMessage = function(e) {
-  	if (e.keyCode != 13) return;
-  	$scope.messages.$add({from: $scope.user, body: $scope.msgPublic});
-  	$scope.msg = "";
-  }
-}*/
