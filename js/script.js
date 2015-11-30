@@ -56,7 +56,7 @@ myApp.controller('SignUpController', function($scope, $location) {
 	};
 });
 
-myApp.controller('LoginController', function($scope, $location) {
+myApp.controller('LoginController', function($scope, $location, $firebaseAuth) {
 	$scope.myStyle = {
 		'backgroundColor': '#21A1CF'
 	};
@@ -65,19 +65,17 @@ myApp.controller('LoginController', function($scope, $location) {
 		var email_login = $("#login-email").val();
 		var password_login = $("#login-password").val();
 
-		myFirebaseRef.authWithPassword({
+		var auth = $firebaseAuth(myFirebaseRef);
+
+		auth.$authWithPassword({
 			"email": email_login,
 			"password": password_login
-		}, function(error, authData) {
-			if (error) {
-				console.log("Login Failed!", error);
-				alert("Login Failed! " + error);
-			} else{
-				console.log("Authenticated successfully with payload:", authData);
-				//$location.path("#/chat");
-				$location.path('/chat');
-			}
-		});
+		}).then(function(authData) {
+	        $location.path('/chat')
+	    }).catch(function(error) {
+	        console.error("ERROR: " + error);
+	        alert("ERROR: " + error);
+	    });
 	};
 });
 
