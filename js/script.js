@@ -81,6 +81,10 @@ myApp.controller('LoginController', function($scope, $location) {
 
 myApp.controller("ChatController", ["$scope", "$firebase",
   function($scope, $firebase) {
+  	$scope.myStyle = {
+		'backgroundColor': '#21A1CF'
+	};
+
     var messagesRef = new Firebase("https://slack-imitation.firebaseio.com/public-messages");
 
     $scope.messages = $firebase(messagesRef).$asArray();

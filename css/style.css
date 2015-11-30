@@ -4,16 +4,96 @@
 	width: 100%;
 	overflow: auto;
 	margin: auto;
+	margin-top: 5%;
+	text-align: center;
 }
 
 .login-form {
 	width: 100%;
 }
 
+.title-login {
+	margin-bottom: 2%;
+}
+
 #login-email {
-	width: 97%;
+	width: 80%;
+	margin-bottom: 1%;
 }
 
 #login-password {
-	width: 97%;
+	width: 80%;
+	margin-bottom: 1%;
+}
+
+.button-login {
+	display: block;
+	margin-bottom: 1%;
+}
+
+#chat-template {
+	display: block;
+	margin-top: 0.15%;
+}
+
+/*Sign up*/
+
+.signup-space {
+	width: 100%;
+	overflow: auto;
+	margin: auto;
+	margin-top: 5%;
+	text-align: center;
+}
+
+.signup-form {
+	width: 100%;
+}
+
+.title-signup {
+	margin-bottom: 2%;
+}
+
+#signup-email {
+	width: 80%;
+	margin-bottom: 1%;
+}
+
+#signup-password {
+	width: 80%;
+	margin-bottom: 1%;
+}
+
+.button-signup {
+	display: block;
+	margin-bottom: 1%;
+}
+
+/*Chat*/
+
+.chat-space {
+	width: 100%;
+	overflow: auto;
+	margin: auto;
+	padding-left: 15%;
+	padding-right: 15%;
+	margin-top: 5%;
+	text-align: center;
+}
+
+.msg-information {
+	text-align: left;
+}
+
+#show-chat {
+	width: 70%;
+	border-radius: 15px;
+	padding-top: 0.1%;
+	padding-bottom: 0.1%;
+	background-color: #7E4C4C;
+}
+
+#input-information {
+	width: 70%;
+	margin-top: 2%;
 }
