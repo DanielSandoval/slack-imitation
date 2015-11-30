@@ -79,19 +79,18 @@ myApp.controller('LoginController', function($scope, $location) {
 	};
 });
 
-myApp.controller('ChatController', function($scope, $firebase) {
-	myFirebaseRef.on('child_added', function(snapshot) {
-		var msg = snapshot.val();
-	});
+myApp.controller("ChatController", ["$scope", "$firebase",
+  function($scope, $firebase) {
+    var messagesRef = new Firebase("https://slack-imitation.firebaseio.com/public-messages");
 
-	$scope.addMessage = function() {
-		myFirebaseRef.on('child_added', function(snapshot) {
-			var message = snapshot.val();
-			//console.log(message.from);
-			$scope.showUser = message.from;
-			console.log($scope.showUser);
-		});
+    $scope.messages = $firebase(messagesRef).$asArray();
 
-		$scope.msgPublic = "";
-	}
-});
+    $scope.addMessage = function() {
+        $scope.messages.$add({
+            from: $scope.user,
+            body: $scope.msgPublic
+        })
+    };
+    $scope.msgPublic = "";
+  }
+]);
