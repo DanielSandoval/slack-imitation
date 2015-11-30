@@ -46,6 +46,7 @@ myApp.controller('SignUpController', function($scope, $location) {
 		}, function(error, userData) {
 			if (error) {
 				console.log("Error creating user:", error);
+				alert("Error creating user:" + error);
 			} else {
 				console.log("Successfully created user account with uid:", userData.uid);
 				$location.path('/chat');
@@ -70,6 +71,7 @@ myApp.controller('LoginController', function($scope, $location) {
 		}, function(error, authData) {
 			if (error) {
 				console.log("Login Failed!", error);
+				alert("Login Failed! " + error);
 			} else{
 				console.log("Authenticated successfully with payload:", authData);
 				//$location.path("#/chat");
@@ -79,13 +81,12 @@ myApp.controller('LoginController', function($scope, $location) {
 	};
 });
 
-myApp.controller("ChatController", ["$scope", "$firebase",
-  function($scope, $firebase) {
-  	$scope.myStyle = {
+myApp.controller('ChatController', function($scope, $firebase, $location) {
+	$scope.myStyle = {
 		'backgroundColor': '#21A1CF'
 	};
 
-    var messagesRef = new Firebase("https://slack-imitation.firebaseio.com/public-messages");
+	var messagesRef = new Firebase("https://slack-imitation.firebaseio.com/public-messages");
 
     $scope.messages = $firebase(messagesRef).$asArray();
 
@@ -96,5 +97,9 @@ myApp.controller("ChatController", ["$scope", "$firebase",
         })
         $scope.msgPublic = "";
     };
-  }
-]);
+
+    $scope.logout = function() {
+    	myFirebaseRef.unauth();
+    	$location.path('/');
+    };
+});

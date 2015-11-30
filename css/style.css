@@ -77,12 +77,13 @@
 	margin: auto;
 	padding-left: 15%;
 	padding-right: 15%;
-	margin-top: 5%;
+	margin-top: 3%;
 	text-align: center;
 }
 
-.msg-information {
-	text-align: left;
+#button-area {
+	width: 70%;
+	margin-bottom: 1%;
 }
 
 #show-chat {
@@ -91,6 +92,10 @@
 	padding-top: 0.1%;
 	padding-bottom: 0.1%;
 	background-color: #7E4C4C;
+}
+
+.msg-information {
+	text-align: left;
 }
 
 #input-information {
