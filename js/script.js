@@ -26,32 +26,25 @@ myApp.config(function($routeProvider) {
 	    });
 });
 
-myApp.controller('SignUpController', function($scope, $location) {
+myApp.controller('SignUpController', function($scope, $location, $firebaseAuth) {
 	$scope.myStyle = {
 		'backgroundColor': '#21A1CF'
 	};
-
-	$("#signup-email").keyup(function() {
-		var email = $(this).val();
-		$("#signup-user").val(email);
-	});
 
 	$scope.signUp = function() {
 		var email_sign = $("#signup-email").val();
 		var password_sign = $("#signup-password").val();
 
-		myFirebaseRef.createUser({
+		var auth = $firebaseAuth(myFirebaseRef);
+
+		auth.$createUser({
 			email: email_sign,
 			password: password_sign
-		}, function(error, userData) {
-			if (error) {
-				console.log("Error creating user:", error);
-				alert("Error creating user:" + error);
-			} else {
-				console.log("Successfully created user account with uid:", userData.uid);
-				$location.path('/chat');
-				//$window.location.href = '/chat';
-			}
+		}).then(function(authData) {
+			$location.path('/chat');
+		}).catch(function(error) {
+			console.error("Error creating user! " + error);
+			alert(error);
 		});
 	};
 });
@@ -71,11 +64,11 @@ myApp.controller('LoginController', function($scope, $location, $firebaseAuth) {
 			"email": email_login,
 			"password": password_login
 		}).then(function(authData) {
-	        $location.path('/chat')
-	    }).catch(function(error) {
-	        console.error("ERROR: " + error);
-	        alert("ERROR: " + error);
-	    });
+			$location.path('/chat');
+		}).catch(function(error) {
+			console.error("Login failed! " + error);
+			alert(error);
+		});
 	};
 });
 
